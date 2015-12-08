@@ -65,8 +65,8 @@ class Device(object):
     def config_list(self, commands):
         return self._cli_command(commands)
 
-    def save(self):
-        self.show(u'copy run start', raw_text=True)
+    def save(self, filename='startup-config'):
+        self.show(u'copy run %s' % filename, raw_text=True)
 
     @property
     def running_config(self):
