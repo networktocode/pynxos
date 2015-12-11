@@ -34,8 +34,12 @@ def convert_list_by_key(original_list, key_map, fill_in=False, whitelist=[], bla
     return converted_list
 
 def list_from_table(table, list_name):
+    if table is None:
+        return []
+
     table_key = u'TABLE_%s' % list_name
     row_key = u'ROW_%s' % list_name
+
     the_list = table[table_key][row_key]
 
     if not isinstance(the_list, list):
