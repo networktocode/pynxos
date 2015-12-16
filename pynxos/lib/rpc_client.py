@@ -3,9 +3,17 @@ from requests.auth import HTTPBasicAuth
 import json
 
 from builtins import range
+from pynxos.errors import NXOSError
 
 class RPCClient(object):
-    def __init__(self, host, username, password, transport=u'http', port=80):
+    def __init__(self, host, username, password, transport=u'http'):
+        if transport == 'http':
+            port = 80
+        elif transport == 'https':
+            port = 443
+        else:
+            raise NXOSError('\'%s\' is an invalid transport.' % transport)
+
         self.url = u'%s://%s:%s/ins' % (transport, host, port)
         self.headers = {u'content-type': u'application/json-rpc'}
         self.username = username
