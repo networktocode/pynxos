@@ -40,7 +40,8 @@ class RPCClient(object):
                                  timeout=timeout,
                                  data=json.dumps(payload_list),
                                  headers=self.headers,
-                                 auth=HTTPBasicAuth(self.username, self.password),)
+                                 auth=HTTPBasicAuth(self.username, self.password),
+                                 verify=False)
 
         response_list = json.loads(response.text)
 
