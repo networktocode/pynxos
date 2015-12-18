@@ -5,14 +5,18 @@ import json
 from builtins import range
 from pynxos.errors import NXOSError
 
+requests.packages.urllib3.disable_warnings()
+
 class RPCClient(object):
-    def __init__(self, host, username, password, transport=u'http'):
-        if transport == 'http':
-            port = 80
-        elif transport == 'https':
-            port = 443
-        else:
+    def __init__(self, host, username, password, transport=u'http', port=None):
+        if transport not in ['http', 'https']:
             raise NXOSError('\'%s\' is an invalid transport.' % transport)
+
+        if port is None:
+            if transport == 'http':
+                port = 80
+            elif transport == 'https':
+                port = 443
 
         self.url = u'%s://%s:%s/ins' % (transport, host, port)
         self.headers = {u'content-type': u'application/json-rpc'}

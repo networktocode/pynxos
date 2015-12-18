@@ -10,7 +10,6 @@ INTERFACE_KEY_MAP = {
     u'description': u'name',
 }
 
-
 MOD_INFO_KEY_MAP = {
     u'type': u'modtype',
 }
@@ -30,4 +29,11 @@ FAN_KEY_MAP = {
     u'hw_ver': u'fanhwver',
     u'direction': u'fandir',
     u'status': u'fanstatus',
+}
+
+VLAN_KEY_MAP = {
+    'id': 'vlanshowbr-vlanid',
+    'name': 'vlanshowbr-vlanname',
+    'state': 'vlanshowbr-vlanstate',
+    'admin_state': 'vlanshowbr-shutstate',
 }

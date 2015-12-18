@@ -1,17 +1,18 @@
+import importlib
 from .lib.rpc_client import RPCClient
-from .lib import convert_dict_by_key, convert_list_by_key, list_from_table, converted_list_from_table
+from .lib import convert_dict_by_key, convert_list_by_key, list_from_table, converted_list_from_table, strip_unicode
 from .lib.data_model import key_maps
 from pynxos.errors import CLIError
 
 class Device(object):
-    def __init__(self, host, username, password, transport=u'http', timeout=30):
+    def __init__(self, host, username, password, transport=u'http', port=None, timeout=30):
         self.host = host
         self.username = username
         self.password = password
         self.transport = transport
         self.timeout = timeout
 
-        self.rpc = RPCClient(host, username, password, transport=transport)
+        self.rpc = RPCClient(host, username, password, transport=transport, port=port)
 
     def _cli_error_check(self, command_response):
         error = command_response.get(u'error')
@@ -33,7 +34,7 @@ class Device(object):
             self._cli_error_check(command_response)
             text_response_list.append(command_response[u'result'])
 
-        return text_response_list
+        return strip_unicode(text_response_list)
 
     def show(self, command, raw_text=False):
         commands = [command]
@@ -101,3 +102,10 @@ class Device(object):
 
         return facts
 
+    def feature(self, feature_name):
+        try:
+            feature_module = importlib.import_module(
+                'pynxos.features.%s' % (feature_name))
+            return feature_module.instance(self)
+        except ImportError:
+            raise FeatureNotFoundError(feature_name, self.device_type)

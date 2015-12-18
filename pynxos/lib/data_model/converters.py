@@ -1,3 +1,19 @@
+import sys
+import collections
+
+def strip_unicode(data):
+    if sys.version_info.major >= 3:
+        return data
+
+    if isinstance(data, basestring):
+        return str(data)
+    elif isinstance(data, collections.Mapping):
+        return dict(map(strip_unicode, data.iteritems()))
+    elif isinstance(data, collections.Iterable):
+        return type(data)(map(strip_unicode, data))
+    else:
+        return data
+
 def convert_dict_by_key(original, key_map, fill_in=False, whitelist=[], blacklist=[]):
     converted = {}
     for converted_key in key_map:
