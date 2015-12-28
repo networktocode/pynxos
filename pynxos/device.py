@@ -1,8 +1,13 @@
 import importlib
+import signal
 from .lib.rpc_client import RPCClient
 from .lib import convert_dict_by_key, convert_list_by_key, list_from_table, converted_list_from_table, strip_unicode
 from .lib.data_model import key_maps
-from pynxos.errors import CLIError
+from pynxos.features.file_copy import FileCopy
+from pynxos.errors import CLIError, NXOSError
+
+class RebootSignal(NXOSError):
+    pass
 
 class Device(object):
     def __init__(self, host, username, password, transport=u'http', port=None, timeout=30):
@@ -68,6 +73,45 @@ class Device(object):
 
     def save(self, filename='startup-config'):
         self.show(u'copy run %s' % filename, raw_text=True)
+
+    def file_copy(self, src, dest=None):
+        fc = FileCopy(self, src, dest)
+        if not fc.remote_file_exists():
+            fc.send()
+
+    def _disable_confirmation(self):
+        self.show('terminal dont-ask')
+
+    def reboot(self, confirm=False):
+        if confirm:
+            def handler(signum, frame):
+                raise RebootSignal('Interupting after reload')
+
+            signal.signal(signal.SIGALRM, handler)
+            signal.alarm(5)
+
+            try:
+                self._disable_confirmation()
+                self.show('reload')
+            except RebootSignal:
+                pass
+
+            signal.alarm(0)
+        else:
+            print('Need to confirm reboot with confirm=True')
+
+    def install_os(self, image_name):
+        return self.show('install all nxos %s' % image_name, raw_text=True)
+
+    def rollback(self, filename):
+        self.show('rollback running-config file %s' % filename, raw_text=True)
+
+    def checkpoint(self, filename):
+        self.show('checkpoint file %s' % filename, raw_text=True)
+
+    def backup_running_config(self, filename):
+        with open(filename, 'w') as f:
+            f.write(self.running_config)
 
     @property
     def running_config(self):
