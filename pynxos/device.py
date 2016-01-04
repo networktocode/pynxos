@@ -4,6 +4,7 @@ from .lib.rpc_client import RPCClient
 from .lib import convert_dict_by_key, convert_list_by_key, list_from_table, converted_list_from_table, strip_unicode
 from .lib.data_model import key_maps
 from pynxos.features.file_copy import FileCopy
+from pynxos.features.vlans import Vlans
 from pynxos.errors import CLIError, NXOSError
 
 class RebootSignal(NXOSError):
@@ -94,7 +95,7 @@ class Device(object):
                 self._disable_confirmation()
                 self.show('reload')
             except RebootSignal:
-                pass
+                signal.alarm(0)
 
             signal.alarm(0)
         else:
@@ -118,31 +119,68 @@ class Device(object):
         response = self.show(u'show running-config', raw_text=True)
         return response
 
+    def _convert_uptime_to_string(self, up_days, up_hours, up_mins, up_secs):
+        return '%02d:%02d:%02d:%02d' % (up_days, up_hours, up_mins, up_secs)
+
+    def _convert_uptime_to_seconds(self, up_days, up_hours, up_mins, up_secs):
+        seconds = up_days * 24 * 60 * 60
+        seconds += up_hours * 60 * 60
+        seconds += up_mins * 60
+        seconds += up_secs
+
+        return seconds
+
+
+    def _get_interface_detailed_list(self):
+        try:
+            interface_table = self.show(u'show interface status')
+            interface_list = converted_list_from_table(interface_table, u'interface', key_maps.INTERFACE_KEY_MAP, fill_in=True)
+        except CLIError:
+            return []
+
+        return interface_list
+
+    def _get_interface_list(self):
+        iface_detailed_list = self._get_interface_detailed_list()
+        iface_list = list(x['interface'] for x in iface_detailed_list)
+
+        return iface_list
+
+    def _get_vlan_list(self):
+        vlans = Vlans(self)
+        vlan_list = vlans.get_list()
+
+        return vlan_list
+
+
     @property
     def facts(self):
+        '''
+        '''
         facts = {}
 
         show_version_result = self.show(u'show version')
+        uptime_facts = convert_dict_by_key(show_version_result, key_maps.UPTIME_KEY_MAP)
+
+        up_days = uptime_facts['up_days']
+        up_hours = uptime_facts['up_hours']
+        up_mins = uptime_facts['up_mins']
+        up_secs = uptime_facts['up_secs']
+
+        uptime_string = self._convert_uptime_to_string(up_days, up_hours, up_mins, up_secs)
+        uptime_seconds = self._convert_uptime_to_seconds(up_days, up_hours, up_mins, up_secs)
+
+        facts['uptime'] = uptime_seconds
+        facts['uptime_string'] = uptime_string
+
         basic_facts = convert_dict_by_key(show_version_result, key_maps.BASIC_FACTS_KEY_MAP)
         facts.update(basic_facts)
 
-        interface_table = self.show(u'show interface status')
-        interface_list = converted_list_from_table(interface_table, u'interface', key_maps.INTERFACE_KEY_MAP, fill_in=True)
-        facts.update({u'interfaces': interface_list})
+        iface_list = self._get_interface_list()
+        facts['interfaces'] = iface_list
 
-        module_table = self.show(u'show module')
-        mod_info_list = converted_list_from_table(module_table, u'modinfo', key_maps.MOD_INFO_KEY_MAP, fill_in=True)
-        facts.update({u'modules': mod_info_list})
-
-        environment_data = self.show(u'show environment')
-
-        ps_table = environment_data[u'powersup']
-        ps_info_list = converted_list_from_table(ps_table, u'psinfo', key_maps.PS_INFO_KEY_MAP)
-        facts.update({u'power_supply_info': ps_info_list})
-
-        fan_table = environment_data[u'fandetails']
-        fan_info_list = converted_list_from_table(fan_table, u'faninfo', key_maps.FAN_KEY_MAP)
-        facts.update({u'fan_list': fan_info_list})
+        vlan_list = self._get_vlan_list()
+        facts['vlans'] = vlan_list
 
         return facts
 

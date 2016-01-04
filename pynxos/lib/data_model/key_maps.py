@@ -1,38 +1,24 @@
 BASIC_FACTS_KEY_MAP = {
-    u'os': u'rr_sys_ver',
-    u'kickstart_image': u'kickstart_ver_str',
-    u'platform': u'chassis_id',
+    u'os_version': u'kickstart_ver_str',
+    u'model': u'chassis_id',
     u'hostname': u'host_name',
-    u'last_reboot_reason': u'rr_reason',
+    u'serial_number': u'proc_board_id'
+}
+
+UPTIME_KEY_MAP = {
+    u'up_days': u'kern_uptm_days',
+    u'up_hours': u'kern_uptm_hrs',
+    u'up_mins': u'kern_uptm_mins',
+    u'up_secs': u'kern_uptm_secs'
 }
 
 INTERFACE_KEY_MAP = {
     u'description': u'name',
 }
 
-MOD_INFO_KEY_MAP = {
-    u'type': u'modtype',
-}
-
-PS_INFO_KEY_MAP = {
-    u'number': u'psnum',
-    u'model': u'psmodel',
-    u'actual_output': u'actual_out',
-    u'actual_input': u'actual_in',
-    u'total_capacity': u'tot_capa',
-    u'status': u'ps_status',
-}
-
-FAN_KEY_MAP = {
-    u'name': u'fanname',
-    u'model': u'fanmodel',
-    u'hw_ver': u'fanhwver',
-    u'direction': u'fandir',
-    u'status': u'fanstatus',
-}
 
 VLAN_KEY_MAP = {
-    'id': 'vlanshowbr-vlanid',
+    'id': 'vlanshowbr-vlanid-utf',
     'name': 'vlanshowbr-vlanname',
     'state': 'vlanshowbr-vlanstate',
     'admin_state': 'vlanshowbr-shutstate',
