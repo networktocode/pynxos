@@ -73,7 +73,14 @@ class Device(object):
         return self._cli_command(commands)
 
     def save(self, filename='startup-config'):
-        self.show(u'copy run %s' % filename, raw_text=True)
+        try:
+            self.show(u'copy run %s' % filename, raw_text=True)
+        except CLIError as e:
+            if 'overwrite' in e.message:
+                return False
+            raise
+
+        return True
 
     def file_copy(self, src, dest=None):
         fc = FileCopy(self, src, dest)
@@ -102,7 +109,9 @@ class Device(object):
             print('Need to confirm reboot with confirm=True')
 
     def install_os(self, image_name):
-        return self.show('install all nxos %s' % image_name, raw_text=True)
+        output = self.show('install all nxos %s' % image_name, raw_text=True)
+        self.save()
+        return output
 
     def rollback(self, filename):
         self.show('rollback running-config file %s' % filename, raw_text=True)
@@ -153,12 +162,8 @@ class Device(object):
         return vlan_list
 
 
-    @property
-    def facts(self):
-        '''
-        '''
+    def _get_show_version_facts(self):
         facts = {}
-
         show_version_result = self.show(u'show version')
         uptime_facts = convert_dict_by_key(show_version_result, key_maps.UPTIME_KEY_MAP)
 
@@ -173,8 +178,22 @@ class Device(object):
         facts['uptime'] = uptime_seconds
         facts['uptime_string'] = uptime_string
 
-        basic_facts = convert_dict_by_key(show_version_result, key_maps.BASIC_FACTS_KEY_MAP)
-        facts.update(basic_facts)
+        show_version_facts = convert_dict_by_key(show_version_result, key_maps.BASIC_FACTS_KEY_MAP)
+
+        return show_version_facts
+
+
+    @property
+    def facts(self):
+        '''
+        '''
+        if hasattr(self, '_facts'):
+            return self._facts
+
+        facts = {}
+
+        show_version_facts = self._get_show_version_facts()
+        facts.update(show_version_facts)
 
         iface_list = self._get_interface_list()
         facts['interfaces'] = iface_list
@@ -182,6 +201,7 @@ class Device(object):
         vlan_list = self._get_vlan_list()
         facts['vlans'] = vlan_list
 
+        self._facts = facts
         return facts
 
     def feature(self, feature_name):
