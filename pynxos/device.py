@@ -47,6 +47,8 @@ class Device(object):
         list_result = self.show_list(commands, raw_text)
         if list_result:
             return list_result[0]
+        else:
+            return {}
 
     def show_list(self, commands, raw_text=False):
         return_list = []
