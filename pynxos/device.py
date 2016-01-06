@@ -84,10 +84,18 @@ class Device(object):
 
         return True
 
-    def file_copy(self, src, dest=None):
-        fc = FileCopy(self, src, dest)
-        if not fc.remote_file_exists():
-            fc.send()
+    def stage_file_copy(self, src, dest=None):
+        if dest is None:
+            dest = src
+        self.fc = FileCopy(self, src, dest)
+
+    def file_copy_remote_exists(self):
+        if self.fc.remote_file_exists():
+            return True
+        return False
+
+    def file_copy(self):
+        self.fc.send()
 
     def _disable_confirmation(self):
         self.show('terminal dont-ask')
