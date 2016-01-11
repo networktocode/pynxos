@@ -154,7 +154,7 @@ class FileCopy(object):
                 scp.put(self.src, self.dst)
         except:
             raise FileTransferError(
-                'Could not transfer file. There was an error during transfer.')
+                'Could not transfer file. There was an error during transfer. Please make sure remote permissions are set.')
         finally:
             scp.close()
 

@@ -84,18 +84,15 @@ class Device(object):
 
         return True
 
-    def stage_file_copy(self, src, dest=None):
-        if dest is None:
-            dest = src
-        self.fc = FileCopy(self, src, dest)
-
-    def file_copy_remote_exists(self):
-        if self.fc.remote_file_exists():
+    def file_copy_remote_exists(self, src, dest=None):
+        fc = FileCopy(self, src, dest)
+        if fc.remote_file_exists():
             return True
         return False
 
-    def file_copy(self):
-        self.fc.send()
+    def file_copy(self, src, dest=None):
+        fc = FileCopy(self, src, dest)
+        fc.send()
 
     def _disable_confirmation(self):
         self.show('terminal dont-ask')
@@ -185,10 +182,10 @@ class Device(object):
         uptime_string = self._convert_uptime_to_string(up_days, up_hours, up_mins, up_secs)
         uptime_seconds = self._convert_uptime_to_seconds(up_days, up_hours, up_mins, up_secs)
 
-        facts['uptime'] = uptime_seconds
-        facts['uptime_string'] = uptime_string
-
         show_version_facts = convert_dict_by_key(show_version_result, key_maps.BASIC_FACTS_KEY_MAP)
+
+        show_version_facts['uptime'] = uptime_seconds
+        show_version_facts['uptime_string'] = uptime_string
 
         return show_version_facts
 
@@ -210,6 +207,8 @@ class Device(object):
 
         vlan_list = self._get_vlan_list()
         facts['vlans'] = vlan_list
+
+        facts['fqdn'] = 'N/A'
 
         self._facts = facts
         return facts
