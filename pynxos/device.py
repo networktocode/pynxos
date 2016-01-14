@@ -1,11 +1,13 @@
 import importlib
 import signal
+import re
 from .lib.rpc_client import RPCClient
 from .lib import convert_dict_by_key, convert_list_by_key, list_from_table, converted_list_from_table, strip_unicode
 from .lib.data_model import key_maps
 from pynxos.features.file_copy import FileCopy
 from pynxos.features.vlans import Vlans
 from pynxos.errors import CLIError, NXOSError
+
 
 class RebootSignal(NXOSError):
     pass
@@ -115,16 +117,41 @@ class Device(object):
         else:
             print('Need to confirm reboot with confirm=True')
 
-    def install_os(self, image_name):
-        output = self.show('install all nxos %s' % image_name, raw_text=True)
-        self.save()
-        return output
+    def set_boot_options(self, image_name, kickstart=None):
+        self._disable_confirmation()
+        try:
+            if kickstart is None:
+                self.show('install all nxos %s' % image_name, raw_text=True)
+            else:
+                self.show('install all system %s kickstart %s' % (image_name, kickstart), raw_text=True)
+        except CLIError:
+            pass
+
+    def get_boot_options(self):
+        boot_options_raw_text = self.show('show boot', raw_text=True).split('Boot Variables on next reload')[1]
+        print boot_options_raw_text
+        if 'kickstart' in boot_options_raw_text:
+            kick_regex = r'kickstart variable = bootflash:/(\S+)'
+            sys_regex = r'system variable = bootflash:/(\S+)'
+
+            kick = re.search(kick_regex, boot_options_raw_text).group(1)
+            sys = re.search(sys_regex, boot_options_raw_text).group(1)
+            retdict = dict(kick=kick, sys=sys)
+        else:
+            nxos_regex = r'NXOS variable = bootflash:/(\S+)'
+            nxos = re.search(nxos_regex, boot_options_raw_text).group(1)
+            retdict = dict(sys=nxos)
+
+        install_status = self.show('show install all status', raw_text=True)
+        retdict['status'] = install_status
+
+        return retdict
 
     def rollback(self, filename):
         self.show('rollback running-config file %s' % filename, raw_text=True)
 
     def checkpoint(self, filename):
-        self.show('checkpoint file %s' % filename, raw_text=True)
+        self.show_list(['terminal dont-ask', 'checkpoint file %s' % filename], raw_text=True)
 
     def backup_running_config(self, filename):
         with open(filename, 'w') as f:

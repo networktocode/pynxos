@@ -39,6 +39,7 @@ class RPCClient(object):
         return payload_list
 
     def send_request(self, commands, method=u'cli', timeout=30):
+        timeout=int(timeout)
         payload_list = self._build_payload(commands, method)
         response = requests.post(self.url,
                                  timeout=timeout,
