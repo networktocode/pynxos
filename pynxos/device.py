@@ -2,7 +2,7 @@ import importlib
 import signal
 import re
 from .lib.rpc_client import RPCClient
-from .lib import convert_dict_by_key, convert_list_by_key, list_from_table, converted_list_from_table, strip_unicode
+from .lib import convert_dict_by_key, converted_list_from_table, strip_unicode
 from .lib.data_model import key_maps
 from pynxos.features.file_copy import FileCopy
 from pynxos.features.vlans import Vlans
@@ -67,7 +67,6 @@ class Device(object):
 
         return return_list
 
-
     def config(self, command):
         commands = [command]
         list_result = self.config_list(commands)
@@ -129,7 +128,6 @@ class Device(object):
 
     def get_boot_options(self):
         boot_options_raw_text = self.show('show boot', raw_text=True).split('Boot Variables on next reload')[1]
-        print boot_options_raw_text
         if 'kickstart' in boot_options_raw_text:
             kick_regex = r'kickstart variable = bootflash:/(\S+)'
             sys_regex = r'system variable = bootflash:/(\S+)'
@@ -173,7 +171,6 @@ class Device(object):
 
         return seconds
 
-
     def _get_interface_detailed_list(self):
         try:
             interface_table = self.show(u'show interface status')
@@ -195,7 +192,6 @@ class Device(object):
 
         return vlan_list
 
-
     def _get_show_version_facts(self):
         facts = {}
         show_version_result = self.show(u'show version')
@@ -215,7 +211,6 @@ class Device(object):
         show_version_facts['uptime_string'] = uptime_string
 
         return show_version_facts
-
 
     @property
     def facts(self):

@@ -2,7 +2,7 @@ from pynxos.lib.data_model.converters import converted_list_from_table
 from pynxos.lib.data_model.key_maps import VLAN_KEY_MAP
 from pynxos.errors import NXOSError
 
-from base_feature import BaseFeature
+from .base_feature import BaseFeature
 
 class VlanNotInRangeError(NXOSError):
     def __init__(self):
@@ -32,7 +32,7 @@ class Vlans(BaseFeature):
 
     def get_list(self):
         all_vlan_list = self.get_all()
-        vlan_id_list = list(x['id'] for x in all_vlan_list)
+        vlan_id_list = list(str(x['id']) for x in all_vlan_list)
 
         return vlan_id_list
 
