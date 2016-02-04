@@ -5,7 +5,7 @@ import json
 from builtins import range
 from pynxos.errors import NXOSError
 
-requests.packages.urllib3.disable_warnings()
+# requests.packages.urllib3.disable_warnings()
 
 class RPCClient(object):
     def __init__(self, host, username, password, transport=u'http', port=None):
