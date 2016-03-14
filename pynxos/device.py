@@ -85,14 +85,14 @@ class Device(object):
 
         return True
 
-    def file_copy_remote_exists(self, src, dest=None):
-        fc = FileCopy(self, src, dest)
+    def file_copy_remote_exists(self, src, dest=None, file_system='bootflash:'):
+        fc = FileCopy(self, src, dst=dest, file_system=file_system)
         if fc.remote_file_exists():
             return True
         return False
 
-    def file_copy(self, src, dest=None):
-        fc = FileCopy(self, src, dest)
+    def file_copy(self, src, dest=None, file_system='bootflash:'):
+        fc = FileCopy(self, src, dst=dest, file_system=file_system)
         fc.send()
 
     def _disable_confirmation(self):

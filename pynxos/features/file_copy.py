@@ -12,16 +12,17 @@ class FileTransferError(NXOSError):
 class FileCopy(object):
     """This class is used to copy local files to a NXOS device.
     """
-    def __init__(self, device, src, dst=None, port=22):
+    def __init__(self, device, src, dst=None, port=22, file_system='bootflash:'):
         self.device = device
         self.src = src
         self.dst = dst or os.path.basename(src)
         self.port = port
+        self.file_system = file_system
 
     def get_flash_size(self):
         """Return the available space in the remote directory.
         """
-        dir_out = self.device.show('dir', raw_text=True)
+        dir_out = self.device.show('dir {}'.format(self.file_system), raw_text=True)
 
         match = re.search(r'(\d+) bytes free', dir_out)
         bytes_free = match.group(1)
@@ -66,7 +67,7 @@ class FileCopy(object):
 
     def remote_file_exists(self):
         dir_body = self.device.show(
-            'dir {0}'.format(self.dst), raw_text=True)
+            'dir {0}/{1}'.format(self.file_system, self.dst), raw_text=True)
         if 'No such file' in dir_body:
             return False
 
@@ -78,7 +79,7 @@ class FileCopy(object):
         """
         try:
             md5_body = self.device.show(
-                'show file {0} md5sum'.format(self.dst), raw_text=False)
+                'show file {0}{1} md5sum'.format(self.file_system, self.dst), raw_text=False)
         except CLIError as e:
             # bug in 7.0(3)I1(2)
             if 'Structured output unsupported' in e.msg:
@@ -146,12 +147,13 @@ class FileCopy(object):
             allow_agent=False,
             look_for_keys=False)
 
+        full_remote_path = '{}{}'.format(self.file_system, self.dst)
         scp = SCPClient(ssh.get_transport())
         try:
             if pull:
-                scp.get(self.dst, self.src)
+                scp.get(full_remote_path, self.src)
             else:
-                scp.put(self.src, self.dst)
+                scp.put(self.src, full_remote_path)
         except:
             raise FileTransferError(
                 'Could not transfer file. There was an error during transfer. Please make sure remote permissions are set.')
