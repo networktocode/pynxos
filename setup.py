@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 setup(name='pynxos',
-      version='0.0.2',
+      version='0.0.3',
       packages=find_packages(),
       description='A library for managing Cisco NX-OS devices through NX-API.',
       author='Network To Code',
