@@ -1,0 +1,10 @@
+[
+    {
+        "command": "sh clock",
+        "jsonrpc": "2.0",
+        "result": {
+            "msg": "18:29:19.583 UTC Tue Mar 22 2016\n"
+        },
+        "id": 1
+    }
+]

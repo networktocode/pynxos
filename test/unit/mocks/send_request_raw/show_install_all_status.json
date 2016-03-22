@@ -1,0 +1,10 @@
+[
+    {
+        "command": "show install all status",
+        "jsonrpc": "2.0",
+        "result": {
+            "msg": "This is the log of last installation.\nVerifying image bootflash:/nxos.7.0.3.I2.1.bin for boot variable \"nxos\".\n -- SUCCESS\nVerifying image type.\n -- SUCCESS\nPreparing \"nxos\" version info using image bootflash:/nxos.7.0.3.I2.1.bin.\n -- SUCCESS\nPreparing \"bios\" version info using image bootflash:/nxos.7.0.3.I2.1.bin.\n -- SUCCESS\nPerforming module support checks.\n -- SUCCESS\nNotifying services about system upgrade.\n -- SUCCESS\nCompatibility check is done:\nModule  bootable          Impact  Install-type  Reason\n------  --------  --------------  ------------  ------\n     1       yes      disruptive         reset  Reset due to single supervisor\nImages will be upgraded according to following table:\nModule       Image                  Running-Version(pri:alt)           New-Version  Upg-Required\n------  ----------  ----------------------------------------  --------------------  ------------\n     1        nxos                               6.1(2)I3(1)           7.0(3)I2(1)           yes\n     1        bios     v07.15(06/29/2014):v07.06(03/02/2014)    v07.34(08/11/2015)           yes\nSwitch will be reloaded for disruptive upgrade.\nInstall is in progress, please wait.\nPerforming runtime checks.\n -- SUCCESS\nSetting boot variables.\n -- SUCCESS\nPerforming configuration copy.\n -- SUCCESS\nModule 1: Refreshing compact flash and upgrading bios/loader/bootrom.\nWarning: please do not remove or power off the module at this time.\n -- SUCCESS\nFinishing the upgrade, switch will reboot in 10 seconds.\n"
+        },
+        "id": 1
+    }
+]

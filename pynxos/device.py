@@ -1,4 +1,3 @@
-import importlib
 import signal
 import re
 from .lib.rpc_client import RPCClient
@@ -11,6 +10,7 @@ from pynxos.errors import CLIError, NXOSError
 
 class RebootSignal(NXOSError):
     pass
+
 
 class Device(object):
     def __init__(self, host, username, password, transport=u'http', port=None, timeout=30):
@@ -45,6 +45,17 @@ class Device(object):
         return strip_unicode(text_response_list)
 
     def show(self, command, raw_text=False):
+        """Send a non-configuration command.
+
+        Args:
+            command (str): The command to send to the device.
+
+        Keyword Args:
+            raw_text (bool): Whether to return raw text or structured data.
+
+        Returns:
+            The output of the show command, which could be raw text or structured data.
+        """
         commands = [command]
         list_result = self.show_list(commands, raw_text)
         if list_result:
@@ -53,6 +64,17 @@ class Device(object):
             return {}
 
     def show_list(self, commands, raw_text=False):
+        """Send a list of non-configuration commands.
+
+        Args:
+            commands (list): A list of commands to send to the device.
+
+        Keyword Args:
+            raw_text (bool): Whether to return raw text or structured data.
+
+        Returns:
+            A list of outputs for each show command
+        """
         return_list = []
         if raw_text:
             response_list = self._cli_command(commands, method=u'cli_ascii')
@@ -68,14 +90,37 @@ class Device(object):
         return return_list
 
     def config(self, command):
+        """Send a configuration command.
+
+        Args:
+            command (str): The command to send to the device.
+
+        Raises:
+            CLIError: If there is a problem with the supplied command.
+        """
         commands = [command]
         list_result = self.config_list(commands)
         return list_result[0]
 
     def config_list(self, commands):
+        """Send a list of configuration commands.
+
+        Args:
+            commands (list): A list of commands to send to the device.
+
+        Raises:
+            CLIError: If there is a problem with one of the commands in the list.
+        """
         return self._cli_command(commands)
 
     def save(self, filename='startup-config'):
+        """Save a device's running configuration.
+
+        Args:
+            filename (str): The filename on the remote device.
+                If none is supplied, the implementing class should
+                save to the "startup configuration".
+        """
         try:
             self.show(u'copy run %s' % filename, raw_text=True)
         except CLIError as e:
@@ -86,12 +131,40 @@ class Device(object):
         return True
 
     def file_copy_remote_exists(self, src, dest=None, file_system='bootflash:'):
+        """Check if a remote file exists. A remote file exists if it has the same name
+        as supplied dest, and the same md5 hash as the source.
+
+        Args:
+            src (str): Path to local file to check.
+
+        Keyword Args:
+            dest (str): The destination file path to be saved on remote the remote device.
+                If none is supplied, the implementing class should use the basename
+                of the source path.
+            file_system (str): The file system for the
+                remote file. Defaults to 'bootflash:'.
+
+        Returns:
+            True if the remote file exists, False if it doesn't.
+        """
         fc = FileCopy(self, src, dst=dest, file_system=file_system)
         if fc.remote_file_exists():
             return True
         return False
 
     def file_copy(self, src, dest=None, file_system='bootflash:'):
+        """Send a local file to the device.
+
+        Args:
+            src (str): Path to the local file to send.
+
+        Keyword Args:
+            dest (str): The destination file path to be saved on remote flash.
+                If none is supplied, the implementing class should use the basename
+                of the source path.
+            file_system (str): The file system for the
+                remote fle. Defaults to bootflash:'.
+        """
         fc = FileCopy(self, src, dst=dest, file_system=file_system)
         fc.send()
 
@@ -99,6 +172,11 @@ class Device(object):
         self.show('terminal dont-ask')
 
     def reboot(self, confirm=False):
+        """Reboot the device.
+
+        Args:
+            confirm(bool): if False, this method has no effect.
+        """
         if confirm:
             def handler(signum, frame):
                 raise RebootSignal('Interupting after reload')
@@ -117,6 +195,15 @@ class Device(object):
             print('Need to confirm reboot with confirm=True')
 
     def set_boot_options(self, image_name, kickstart=None):
+        """Set boot variables
+        like system image and kickstart image.
+
+        Args:
+            The main system image file name.
+
+        Keyword Args: many implementors may choose
+            to supply a kickstart parameter to specicify a kickstart image.
+        """
         self._disable_confirmation()
         try:
             if kickstart is None:
@@ -127,6 +214,12 @@ class Device(object):
             pass
 
     def get_boot_options(self):
+        """Get current boot variables
+        like system image and kickstart image.
+
+        Returns:
+            A dictionary, e.g. { 'kick': router_kick.img, 'sys': 'router_sys.img'}
+        """
         boot_options_raw_text = self.show('show boot', raw_text=True).split('Boot Variables on next reload')[1]
         if 'kickstart' in boot_options_raw_text:
             kick_regex = r'kickstart variable = bootflash:/(\S+)'
@@ -146,17 +239,34 @@ class Device(object):
         return retdict
 
     def rollback(self, filename):
+        """Rollback to a checkpoint file.
+
+        Args:
+            filename (str): The filename of the checkpoint file to load into the running configuration.
+        """
         self.show('rollback running-config file %s' % filename, raw_text=True)
 
     def checkpoint(self, filename):
+        """Save a checkpoint of the running configuration to the device.
+
+        Args:
+            filename (str): The filename to save the checkpoint as on the remote device.
+        """
         self.show_list(['terminal dont-ask', 'checkpoint file %s' % filename], raw_text=True)
 
     def backup_running_config(self, filename):
+        """Save a local copy of the running config.
+
+        Args:
+            filename (str): The local file path on which to save the running config.
+        """
         with open(filename, 'w') as f:
             f.write(self.running_config)
 
     @property
     def running_config(self):
+        """Return the running configuration of the device.
+        """
         response = self.show(u'show running-config', raw_text=True)
         return response
 
@@ -193,7 +303,6 @@ class Device(object):
         return vlan_list
 
     def _get_show_version_facts(self):
-        facts = {}
         show_version_result = self.show(u'show version')
         uptime_facts = convert_dict_by_key(show_version_result, key_maps.UPTIME_KEY_MAP)
 
@@ -214,8 +323,50 @@ class Device(object):
 
     @property
     def facts(self):
-        '''
-        '''
+        """Return a dictionary of facts about the device.
+
+        The dictionary must include the following keys.
+        All keys are strings, the value type is given in parenthesis:
+            uptime (int)
+            vendor (str)
+            os_version (str)
+            interfaces (list of strings)
+            hostname (str)
+            fqdn (str)
+            uptime_string (str)
+            serial_number (str)
+            model (str)
+            vlans (list of strings)
+
+        The dictionary can also include a vendor-specific dictionary, with the
+        device type as a key in the outer dictionary.
+
+        Example:
+            {
+                "uptime": 1819711,
+                "vendor": "cisco",
+                "os_version": "7.0(3)I2(1)",
+                "interfaces": [
+                    "mgmt0",
+                    "Ethernet1/1",
+                    "Ethernet1/2",
+                    "Ethernet1/3",
+                    "Ethernet1/4",
+                    "Ethernet1/5",
+                    "Ethernet1/6",
+                ],
+                "hostname": "n9k1",
+                "fqdn": "N/A",
+                "uptime_string": "21:01:28:31",
+                "serial_number": "SAL1819S6LU",
+                "model": "Nexus9000 C9396PX Chassis",
+                "vlans": [
+                    "1",
+                    "2",
+                    "3",
+                ]
+            }
+        """
         if hasattr(self, '_facts'):
             return self._facts
 
@@ -235,10 +386,10 @@ class Device(object):
         self._facts = facts
         return facts
 
-    def feature(self, feature_name):
-        try:
-            feature_module = importlib.import_module(
-                'pynxos.features.%s' % (feature_name))
-            return feature_module.instance(self)
-        except ImportError:
-            raise FeatureNotFoundError(feature_name, self.device_type)
+#    def feature(self, feature_name):
+#        try:
+#            feature_module = importlib.import_module(
+#                'pynxos.features.%s' % (feature_name))
+#            return feature_module.instance(self)
+#        except ImportError:
+#            raise FeatureNotFoundError(feature_name, self.device_type)

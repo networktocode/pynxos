@@ -1,0 +1,10 @@
+[
+    {
+        "command": "show boot",
+        "jsonrpc": "2.0",
+        "result": {
+            "msg": "Current Boot Variables:\nkickstart variable = bootflash:/n5000-uk9-kickstart.7.2.1.N1.1.bin\nsystem variable = bootflash:/n5000-uk9.7.2.1.N1.1.bin\nBoot POAP Disabled\nBoot Variables on next reload:\nkickstart variable = bootflash:/n5000-uk9-kickstart.7.2.1.N1.1.bin\nsystem variable = bootflash:/n5000-uk9.7.2.1.N1.1.bin\nBoot POAP Disabled\n"
+        },
+        "id": 1
+    }
+]

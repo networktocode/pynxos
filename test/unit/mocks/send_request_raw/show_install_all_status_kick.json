@@ -1,0 +1,10 @@
+[
+    {
+        "command": "show install all status",
+        "jsonrpc": "2.0",
+        "result": {
+            "msg": "This is the log of last installation.\nContinuing with installation process, please wait.\nThe login will be disabled until the installation is completed.\nPerforming supervisor state verification. \nSUCCESS\nSupervisor non-disruptive upgrade successful.\nInstall has been successful.\n"
+        },
+        "id": 1
+    }
+]

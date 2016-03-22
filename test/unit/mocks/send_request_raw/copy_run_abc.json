@@ -1,0 +1,14 @@
+[
+    {
+        "command": "copy run abc",
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+            "message": "Invalid params",
+            "code": -32602,
+            "data": {
+                "msg": "Permission denied. Cannot overwrite existing file.\n"
+            }
+        }
+    }
+]

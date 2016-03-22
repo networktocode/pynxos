@@ -1,0 +1,18 @@
+[
+    {
+        "command": "sh clock",
+        "jsonrpc": "2.0",
+        "result": {
+            "msg": "18:55:38.720 UTC Tue Mar 22 2016\n"
+        },
+        "id": 1
+    },
+    {
+        "command": "sh hostname",
+        "jsonrpc": "2.0",
+        "result": {
+            "msg": "N9K2.ntc.com \n"
+        },
+        "id": 2
+    }
+]

@@ -1,0 +1,35 @@
+[
+    {
+        "command": "show version",
+        "jsonrpc": "2.0",
+        "result": {
+            "body": {
+                "kern_uptm_secs": 10,
+                "kick_file_name": "bootflash:///nxos.7.0.3.I2.1.bin",
+                "rr_service": "",
+                "kick_tmstmp": "09/04/2015 00:18:15",
+                "bios_cmpl_time": "08/11/2015",
+                "bootflash_size": 21693714,
+                "kickstart_ver_str": "7.0(3)I2(1)",
+                "kick_cmpl_time": " 9/3/2015 16:00:00",
+                "chassis_id": "Nexus9000 C9396PX Chassis",
+                "proc_board_id": "SAL1819S6BE",
+                "memory": 16402008,
+                "manufacturer": "Cisco Systems, Inc.",
+                "kern_uptm_mins": 47,
+                "bios_ver_str": "07.34",
+                "cpu_name": "Intel(R) Core(TM) i3- CPU @ 2.50GHz",
+                "kern_uptm_hrs": 5,
+                "rr_usecs": 738533,
+                "rr_sys_ver": "6.1(2)I3(1)",
+                "rr_reason": "Reset due to upgrade",
+                "rr_ctime": " Tue Mar 15 15:46:05 2016\n",
+                "header_str": "Cisco Nexus Operating System (NX-OS) Software\nTAC support: http://www.cisco.com/tac\nCopyright (C) 2002-2015, Cisco and/or its affiliates.\nAll rights reserved.\nThe copyrights to certain works contained in this software are\nowned by other third parties and used and distributed under their own\nlicenses, such as open source.  This software is provided \"as is,\" and unless\notherwise stated, there is no warranty, express or implied, including but not\nlimited to warranties of merchantability and fitness for a particular purpose.\nCertain components of this software are licensed under\nthe GNU General Public License (GPL) version 2.0 or \nGNU General Public License (GPL) version 3.0  or the GNU\nLesser General Public License (LGPL) Version 2.1 or \nLesser General Public License (LGPL) Version 2.0. \nA copy of each such license is available at\nhttp://www.opensource.org/licenses/gpl-2.0.php and\nhttp://opensource.org/licenses/gpl-3.0.html and\nhttp://www.opensource.org/licenses/lgpl-2.1.php and\nhttp://www.gnu.org/licenses/old-licenses/library.txt.\n",
+                "host_name": "N9K2",
+                "mem_type": "kB",
+                "kern_uptm_days": 7
+            }
+        },
+        "id": 1
+    }
+]

@@ -1,0 +1,12 @@
+[
+    {
+        "command": "sh clock",
+        "jsonrpc": "2.0",
+        "result": {
+            "body": {
+                "simple_time": "18:06:31.021 UTC Tue Mar 22 2016\n"
+            }
+        },
+        "id": 1
+    }
+]

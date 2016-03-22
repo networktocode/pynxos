@@ -1,0 +1,603 @@
+[
+    {
+        "command": "show interface status",
+        "jsonrpc": "2.0",
+        "result": {
+            "body": {
+                "TABLE_interface": {
+                    "ROW_interface": [
+                        {
+                            "name": "out of band mgmt interface",
+                            "duplex": "full",
+                            "type": "--",
+                            "vlan": "routed",
+                            "state": "connected",
+                            "interface": "mgmt0",
+                            "speed": "100"
+                        },
+                        {
+                            "duplex": "full",
+                            "type": "SFP-H10GB-CU2M",
+                            "vlan": "1",
+                            "state": "connected",
+                            "interface": "Ethernet1/1",
+                            "speed": "10G"
+                        },
+                        {
+                            "duplex": "full",
+                            "type": "SFP-H10GB-CU2M",
+                            "vlan": "1",
+                            "state": "connected",
+                            "interface": "Ethernet1/2",
+                            "speed": "10G"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/3",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/4",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "trunk",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/5",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "trunk",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/6",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "trunk",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/7",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/8",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/9",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/10",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/11",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/12",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/13",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/14",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/15",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/16",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/17",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/18",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/19",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/20",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/21",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/22",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/23",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/24",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/25",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/26",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/27",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/28",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/29",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/30",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "routed",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/31",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "routed",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/32",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "routed",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/33",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/34",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/35",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/36",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/37",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/38",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/39",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/40",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/41",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/42",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/43",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/44",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/45",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/46",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/47",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet1/48",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "QSFP-40G-SR-BD",
+                            "vlan": "routed",
+                            "state": "vrfUnusable",
+                            "interface": "Ethernet2/1",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "QSFP-40G-SR-BD",
+                            "vlan": "routed",
+                            "state": "notconnect",
+                            "interface": "Ethernet2/2",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "QSFP-40G-SR-BD",
+                            "vlan": "routed",
+                            "state": "notconnect",
+                            "interface": "Ethernet2/3",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "QSFP-40G-SR-BD",
+                            "vlan": "routed",
+                            "state": "notconnect",
+                            "interface": "Ethernet2/4",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "trunk",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet2/5",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "trunk",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet2/6",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet2/7",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet2/8",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet2/9",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "xcvrAbsent",
+                            "interface": "Ethernet2/10",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "QSFP-40G-SR-BD",
+                            "vlan": "1",
+                            "state": "disabled",
+                            "interface": "Ethernet2/11",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "QSFP-40G-SR-BD",
+                            "vlan": "1",
+                            "state": "disabled",
+                            "interface": "Ethernet2/12",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "noOperMembers",
+                            "interface": "port-channel11",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "noOperMembers",
+                            "interface": "port-channel12",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "1",
+                            "state": "noOperMembers",
+                            "interface": "port-channel100",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "routed",
+                            "state": "disabled",
+                            "interface": "loopback10",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "routed",
+                            "state": "disabled",
+                            "interface": "loopback11",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "routed",
+                            "state": "connected",
+                            "interface": "loopback13",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "routed",
+                            "state": "connected",
+                            "interface": "loopback15",
+                            "speed": "auto"
+                        },
+                        {
+                            "duplex": "auto",
+                            "type": "--",
+                            "vlan": "routed",
+                            "state": "connected",
+                            "interface": "loopback16",
+                            "speed": "auto"
+                        },
+                        {
+                            "interface": "Vlan1",
+                            "duplex": "auto",
+                            "state": "down",
+                            "vlan": "routed",
+                            "speed": "auto"
+                        },
+                        {
+                            "interface": "Vlan10",
+                            "duplex": "auto",
+                            "state": "down",
+                            "vlan": "routed",
+                            "speed": "auto"
+                        },
+                        {
+                            "interface": "Vlan20",
+                            "duplex": "auto",
+                            "state": "down",
+                            "vlan": "routed",
+                            "speed": "auto"
+                        },
+                        {
+                            "interface": "Vlan100",
+                            "duplex": "auto",
+                            "state": "down",
+                            "vlan": "routed",
+                            "speed": "auto"
+                        },
+                        {
+                            "interface": "Vlan233",
+                            "duplex": "auto",
+                            "state": "down",
+                            "vlan": "routed",
+                            "speed": "auto"
+                        }
+                    ]
+                }
+            }
+        },
+        "id": 1
+    }
+]

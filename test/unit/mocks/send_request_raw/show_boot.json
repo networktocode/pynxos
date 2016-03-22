@@ -1,0 +1,10 @@
+[
+    {
+        "command": "show boot",
+        "jsonrpc": "2.0",
+        "result": {
+            "msg": "Current Boot Variables:\nsup-1\nNXOS variable = bootflash:/nxos.7.0.3.I2.1.bin\nNo module boot variable set\nBoot Variables on next reload:\nsup-1\nNXOS variable = bootflash:/nxos.7.0.3.I2.1.bin\nNo module boot variable set\n"
+        },
+        "id": 1
+    }
+]
