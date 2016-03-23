@@ -12,9 +12,8 @@ CURRNENT_DIR = os.path.dirname(os.path.realpath(__file__))
 
 class TestDevice(unittest.TestCase):
 
-    @mock.patch('pynxos.device', autospec=True)
     @mock.patch('pynxos.device.RPCClient')
-    def setUp(self, mock_rpc, mock_node):
+    def setUp(self, mock_rpc):
         self.device = Device('host', 'user', 'pass')
         self.rpc = mock_rpc
         self.send_request = mock_rpc.return_value.send_request
