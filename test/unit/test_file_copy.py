@@ -233,67 +233,6 @@ class FileCopyTestCase(unittest.TestCase):
         mock_SCP.return_value.put.assert_called_with('/path/to/source_file', 'bootflash:source_file')
         mock_SCP.return_value.close.assert_called_with()
 
-#    @mock.patch('pyhpncw7.features.file_copy.paramiko')
-#    @mock.patch('pyhpncw7.features.file_copy.SCPClient')
-#    @mock.patch.object(FileCopy, '_safety_checks')
-#    @mock.patch.object(FileCopy, '_get_local_md5')
-#    @mock.patch.object(FileCopy, '_get_remote_md5')
-#    def test_transfer_file_mismatch_hash(self, mock_remote_md5, mock_local_md5, mock_safety_checks, mock_SCP, mock_paramiko):
-#        mock_remote_md5.return_value = 'abc'
-#        mock_local_md5.return_value = 'def'
-#
-#        mock_ssh = mock_paramiko.SSHClient.return_value
-#
-#        with self.assertRaises(FileHashMismatchError):
-#            self.file_copy.transfer_file()
-#
-#        mock_paramiko.SSHClient.assert_called_with()
-#
-#        mock_ssh.set_missing_host_key_policy.assert_called_with(mock_paramiko.AutoAddPolicy.return_value)
-#        mock_ssh.connect.assert_called_with(allow_agent=False,
-#                                             hostname=self.device.host,
-#                                             look_for_keys=False,
-#                                             password=self.device.password,
-#                                             port=22,
-#                                             username=self.device.username)
-#
-#        mock_SCP.assert_called_with(mock_ssh.get_transport.return_value)
-#        mock_SCP.return_value.put.assert_called_with('/path/to/source/file.txt', 'flash:/file.txt')
-#        mock_SCP.return_value.close.assert_called_with()
-#
-#    @mock.patch('pyhpncw7.features.file_copy.paramiko')
-#    @mock.patch('pyhpncw7.features.file_copy.SCPClient')
-#    @mock.patch.object(FileCopy, '_safety_checks')
-#    @mock.patch.object(FileCopy, '_get_local_md5')
-#    @mock.patch.object(FileCopy, '_get_remote_md5')
-#    def test_transfer_file_error(self, mock_remote_md5, mock_local_md5, mock_safety_checks, mock_SCP, mock_paramiko):
-#        mock_remote_md5.return_value = 'abc'
-#        mock_local_md5.return_value = 'def'
-#
-#        mock_ssh = mock_paramiko.SSHClient.return_value
-#
-#        mock_SCP.return_value.put.side_effect = Exception
-#
-#        with self.assertRaises(FileTransferError):
-#            self.file_copy.transfer_file()
-#
-#        mock_paramiko.SSHClient.assert_called_with()
-#
-#        mock_ssh.set_missing_host_key_policy.assert_called_with(mock_paramiko.AutoAddPolicy.return_value)
-#        mock_ssh.connect.assert_called_with(allow_agent=False,
-#                                             hostname=self.device.host,
-#                                             look_for_keys=False,
-#                                             password=self.device.password,
-#                                             port=22,
-#                                             username=self.device.username)
-#
-#        mock_SCP.assert_called_with(mock_ssh.get_transport.return_value)
-#        mock_SCP.return_value.put.assert_called_with('/path/to/source/file.txt', 'flash:/file.txt')
-
-
-
-
-
 
 if __name__ == "__main__":
     unittest.main()
