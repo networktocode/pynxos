@@ -77,19 +77,9 @@ class FileCopy(object):
         """Return the md5 sum of the remote file,
         if it exists.
         """
-        try:
-            md5_body = self.device.show(
-                'show file {0}{1} md5sum'.format(self.file_system, self.dst), raw_text=False)
-        except CLIError as e:
-            print e
-            # bug in 7.0(3)I1(2)
-            if 'Structured output unsupported' in e.msg:
-                md5_body = e.err
-                return md5_body
-            raise e
-
-        if md5_body:
-            return md5_body['file_content_md5sum'].strip()
+        md5_body = self.device.show(
+            'show file {0}{1} md5sum'.format(self.file_system, self.dst), raw_text=True)
+        return md5_body.strip()
 
     def get_local_md5(self, blocksize=2**20):
         """Get the md5 sum of the local file,
