@@ -148,7 +148,7 @@ class Device(object):
             True if the remote file exists, False if it doesn't.
         """
         fc = FileCopy(self, src, dst=dest, file_system=file_system)
-        if fc.remote_file_exists():
+        if fc.file_already_exists():
             return True
         return False
 
