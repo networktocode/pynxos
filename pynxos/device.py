@@ -1,6 +1,7 @@
 import signal
 import re
 from .lib.rpc_client import RPCClient
+from .lib.xml_client import XMLClient
 from .lib import convert_dict_by_key, converted_list_from_table, strip_unicode
 from .lib.data_model import key_maps
 from pynxos.features.file_copy import FileCopy
@@ -21,6 +22,7 @@ class Device(object):
         self.timeout = timeout
 
         self.rpc = RPCClient(host, username, password, transport=transport, port=port)
+        self.xml = XMLClient(host, username, password, transport=transport, port=port)
 
     def _cli_error_check(self, command_response):
         error = command_response.get(u'error')
@@ -30,6 +32,14 @@ class Device(object):
                 raise CLIError(command, error[u'data'][u'msg'])
             else:
                 raise CLIError(command, 'Invalid command.')
+
+    def _cli_command_xml(self, commands, method=u'cli_show'):
+        if not isinstance(commands, list):
+            commands = [commands]
+
+        xml_response = self.xml.send_request(commands, method=method, timeout=self.timeout)
+
+        print xml_response
 
     def _cli_command(self, commands, method=u'cli'):
         if not isinstance(commands, list):
