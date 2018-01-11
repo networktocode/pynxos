@@ -13,14 +13,15 @@ class RebootSignal(NXOSError):
 
 
 class Device(object):
-    def __init__(self, host, username, password, transport=u'http', port=None, timeout=30):
+    def __init__(self, host, username, password, transport=u'http', port=None, timeout=30, verify=True):
         self.host = host
         self.username = username
         self.password = password
         self.transport = transport
         self.timeout = timeout
+        self.verify = verify
 
-        self.rpc = RPCClient(host, username, password, transport=transport, port=port)
+        self.rpc = RPCClient(host, username, password, transport=transport, port=port, verify=self.verify)
 
     def _cli_error_check(self, command_response):
         error = command_response.get(u'error')

@@ -8,7 +8,7 @@ from pynxos.errors import NXOSError
 # requests.packages.urllib3.disable_warnings()
 
 class RPCClient(object):
-    def __init__(self, host, username, password, transport=u'http', port=None):
+    def __init__(self, host, username, password, transport=u'http', port=None, verify=True):
         if transport not in ['http', 'https']:
             raise NXOSError('\'%s\' is an invalid transport.' % transport)
 
@@ -22,6 +22,7 @@ class RPCClient(object):
         self.headers = {u'content-type': u'application/json-rpc'}
         self.username = username
         self.password = password
+        self.verify = verify
 
     def _build_payload(self, commands, method, rpc_version=u'2.0'):
         payload_list = []
@@ -46,7 +47,7 @@ class RPCClient(object):
                                  data=json.dumps(payload_list),
                                  headers=self.headers,
                                  auth=HTTPBasicAuth(self.username, self.password),
-                                 verify=False)
+                                 verify=self.verify)
 
         response_list = json.loads(response.text)
 
