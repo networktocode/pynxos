@@ -1,12 +1,7 @@
 import requests
 from requests.auth import HTTPBasicAuth
-import json
 
-from builtins import range
 from pynxos.errors import NXOSError
-import xmltodict
-
-# requests.packages.urllib3.disable_warnings()
 
 
 class XMLClient(object):
