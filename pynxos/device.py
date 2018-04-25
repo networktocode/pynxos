@@ -1,3 +1,5 @@
+from __future__ import print_function, unicode_literals
+
 import signal
 import re
 from .lib.rpc_client import RPCClient
@@ -14,7 +16,8 @@ class RebootSignal(NXOSError):
 
 
 class Device(object):
-    def __init__(self, host, username, password, transport=u'http', port=None, timeout=30, verify=True):
+    def __init__(self, host, username, password, transport=u'http', port=None, timeout=30,
+                 verify=True):
         self.host = host
         self.username = username
         self.password = password
@@ -22,8 +25,10 @@ class Device(object):
         self.timeout = timeout
         self.verify = verify
 
-        self.rpc = RPCClient(host, username, password, transport=transport, port=port, verify=self.verify)
-        self.xml = XMLClient(host, username, password, transport=transport, port=port, verify=self.verify)
+        self.rpc = RPCClient(host, username, password, transport=transport, port=port,
+                             verify=self.verify)
+        self.xml = XMLClient(host, username, password, transport=transport, port=port,
+                             verify=self.verify)
 
     def _cli_error_check(self, command_response):
         error = command_response.get(u'error')
@@ -37,8 +42,7 @@ class Device(object):
     def _cli_command_xml(self, commands, method=u'cli_show'):
         if not isinstance(commands, list):
             commands = [commands]
-
-        xml_response = self.xml.send_request(commands, method=method, timeout=self.timeout)
+        self.xml.send_request(commands, method=method, timeout=self.timeout)
 
     def _cli_command(self, commands, method=u'cli'):
         if not isinstance(commands, list):
@@ -218,7 +222,8 @@ class Device(object):
             if kickstart is None:
                 self.show('install all nxos %s' % image_name, raw_text=True)
             else:
-                self.show('install all system %s kickstart %s' % (image_name, kickstart), raw_text=True)
+                self.show('install all system %s kickstart %s' % (image_name, kickstart),
+                          raw_text=True)
         except CLIError:
             pass
 
@@ -229,7 +234,8 @@ class Device(object):
         Returns:
             A dictionary, e.g. { 'kick': router_kick.img, 'sys': 'router_sys.img'}
         """
-        boot_options_raw_text = self.show('show boot', raw_text=True).split('Boot Variables on next reload')[1]
+        boot_options_raw_text = self.show('show boot', raw_text=True)
+        boot_options_raw_text = boot_options_raw_text.split('Boot Variables on next reload')[1]
         if 'kickstart' in boot_options_raw_text:
             kick_regex = r'kickstart variable = bootflash:/(\S+)'
             sys_regex = r'system variable = bootflash:/(\S+)'
@@ -251,7 +257,8 @@ class Device(object):
         """Rollback to a checkpoint file.
 
         Args:
-            filename (str): The filename of the checkpoint file to load into the running configuration.
+            filename (str): The filename of the checkpoint file to load into the running
+            configuration.
         """
         self.show('rollback running-config file %s' % filename, raw_text=True)
 
@@ -293,10 +300,10 @@ class Device(object):
     def _get_interface_detailed_list(self):
         try:
             interface_table = self.show(u'show interface status')
-            interface_list = converted_list_from_table(interface_table, u'interface', key_maps.INTERFACE_KEY_MAP, fill_in=True)
+            interface_list = converted_list_from_table(interface_table, u'interface',
+                                                       key_maps.INTERFACE_KEY_MAP, fill_in=True)
         except CLIError:
             return []
-
         return interface_list
 
     def _get_interface_list(self):
