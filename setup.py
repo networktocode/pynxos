@@ -8,5 +8,5 @@ setup(name='pynxos',
       author_email='ntc@networktocode.com',
       url='https://github.com/networktocode/pynxos/',
       download_url='https://github.com/networktocode/pynxos/tarball/master',
-      install_requires=['requests>=2.7.0', 'future']
+      install_requires=['requests>=2.7.0', 'future', 'scp']
       )
