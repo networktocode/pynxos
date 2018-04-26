@@ -1,3 +1,7 @@
 *.pyc
 *~
 *pycache*
+.cache/*
+.pytest_cache/*
+.tox/*
+*.egg-info/*

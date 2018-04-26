@@ -1,1 +1,5 @@
 pylama
+tox
+mock
+pytest
+-r requirements.txt
