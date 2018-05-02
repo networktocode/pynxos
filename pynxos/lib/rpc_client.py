@@ -1,16 +1,16 @@
+from __future__ import print_function, unicode_literals
+
 import requests
 from requests.auth import HTTPBasicAuth
 import json
 
-from builtins import range
 from pynxos.errors import NXOSError
 
-# requests.packages.urllib3.disable_warnings()
 
 class RPCClient(object):
-    def __init__(self, host, username, password, transport=u'http', port=None, verify=True):
+    def __init__(self, host, username, password, transport='http', port=None, verify=True):
         if transport not in ['http', 'https']:
-            raise NXOSError('\'%s\' is an invalid transport.' % transport)
+            raise NXOSError("'%s' is an invalid transport." % transport)
 
         if port is None:
             if transport == 'http':
@@ -18,13 +18,13 @@ class RPCClient(object):
             elif transport == 'https':
                 port = 443
 
-        self.url = u'%s://%s:%s/ins' % (transport, host, port)
-        self.headers = {u'content-type': u'application/json-rpc'}
+        self.url = '%s://%s:%s/ins' % (transport, host, port)
+        self.headers = {'content-type': 'application/json-rpc'}
         self.username = username
         self.password = password
         self.verify = verify
 
-    def _build_payload(self, commands, method, rpc_version=u'2.0'):
+    def _build_payload(self, commands, method, rpc_version='2.0'):
         payload_list = []
 
         id_num = 1
@@ -33,14 +33,12 @@ class RPCClient(object):
                            method=method,
                            params=dict(cmd=command, version=1),
                            id=id_num,)
-
             payload_list.append(payload)
             id_num += 1
-
         return payload_list
 
-    def send_request(self, commands, method=u'cli', timeout=30):
-        timeout=int(timeout)
+    def send_request(self, commands, method='cli', timeout=30):
+        timeout = int(timeout)
         payload_list = self._build_payload(commands, method)
         response = requests.post(self.url,
                                  timeout=timeout,
@@ -54,7 +52,7 @@ class RPCClient(object):
         if isinstance(response_list, dict):
             response_list = [response_list]
 
-        for i in range(len(commands)):
-            response_list[i][u'command'] = commands[i]
-
+        # Add the 'command' that was executed to the response dictionary
+        for i, response_dict in enumerate(response_list):
+            response_dict['command'] = commands[i]
         return response_list
